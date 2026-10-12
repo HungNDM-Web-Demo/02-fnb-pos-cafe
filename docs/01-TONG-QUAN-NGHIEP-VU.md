@@ -14,7 +14,7 @@
 | Loại sản phẩm | Màn hình bán hàng trên tablet + web quản lý |
 | Ý tưởng gốc | 1.1 · POS bán hàng quán cafe/trà sữa (`ZDOCS/02-KE-HOACH/DANH-SACH-Y-TUONG.md`) |
 | Người phụ trách | |
-| Trạng thái | Mới tạo từ khuôn mẫu |
+| Trạng thái | Có tài liệu nghiệp vụ (SRS, use case, kịch bản demo, kịch bản kiểm thử), chưa code |
 
 ## 2. Vấn đề của khách hàng
 
@@ -47,7 +47,9 @@
 | `Pos` | Thực đơn: danh mục, món, size, topping | `/menu-items` | P1 |
 | `Pos` | Bán hàng tại quầy | `/pos` | P1 |
 | `Pos` | Thanh toán, in bill | `/pos` (hộp thoại) | P1 |
+| `Pos` | Tra cứu, in lại, hủy hóa đơn | `/orders` | P2 |
 | `Pos` | Ca làm: mở, chốt, đối soát | `/shifts` | P1 |
+| `Pos` | Tổng quan trong ngày | `/dashboard` | P1 |
 | `Pos` | Khuyến mãi, voucher | `/promotions` | P2 |
 | `Pos` | Báo cáo doanh thu, món bán chạy | `/reports` | P1 |
 | `Crm` | Khách hàng tích điểm | `/customers` | P3 |
