@@ -11,10 +11,16 @@ export function BrandPreview({ appName, logoUrl, primaryColor }: BrandPreviewPro
   const style = brandCssVariables(primaryColor) as React.CSSProperties
 
   return (
-    <div className="brand-scope bg-background overflow-hidden rounded-xl border" style={style} aria-label="Xem trước giao diện">
+    <div
+      className="brand-scope bg-background overflow-hidden rounded-xl border"
+      style={style}
+      aria-label="Xem trước giao diện"
+    >
       <div className="flex h-12 items-center gap-2 border-b px-3">
         <BrandMark size="sm" logoUrl={logoUrl} appName={appName || 'Ứng dụng'} />
-        <span className="min-w-0 flex-1 truncate text-sm font-semibold">{appName || 'Tên ứng dụng'}</span>
+        <span className="min-w-0 flex-1 truncate text-sm font-semibold">
+          {appName || 'Tên ứng dụng'}
+        </span>
         <Bell className="text-muted-foreground size-4" aria-hidden="true" />
       </div>
       <div className="flex">
@@ -58,7 +64,9 @@ export function BrandPreview({ appName, logoUrl, primaryColor }: BrandPreviewPro
           <div className="bg-muted h-1.5 overflow-hidden rounded-full">
             <div className="bg-primary h-full w-2/3 rounded-full" />
           </div>
-          <span className="text-primary text-xs font-medium underline underline-offset-2">Xem chi tiết</span>
+          <span className="text-primary text-xs font-medium underline underline-offset-2">
+            Xem chi tiết
+          </span>
         </div>
       </div>
     </div>

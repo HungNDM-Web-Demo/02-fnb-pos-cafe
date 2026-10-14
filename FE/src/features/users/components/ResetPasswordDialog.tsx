@@ -8,7 +8,14 @@ import { toast } from 'sonner'
 import { FormField } from '@/components/shared/FormField'
 import { PasswordInput } from '@/components/shared/PasswordInput'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { applyFieldErrors, getErrorMessage } from '@/lib/api-error'
 import { PASSWORD_MESSAGE } from '@/lib/validators'
 import { useResetUserPassword } from '../hooks/use-users'
@@ -16,7 +23,13 @@ import { resetPasswordSchema, type ResetPasswordValues } from '../schemas/user.s
 import type { UserDto } from '../types/user.types'
 
 /** Đặt lại mật khẩu cho một tài khoản (UC-SYS-05 luồng 1c). */
-export function ResetPasswordDialog({ user, onOpenChange }: { user: UserDto | null; onOpenChange: (open: boolean) => void }) {
+export function ResetPasswordDialog({
+  user,
+  onOpenChange,
+}: {
+  user: UserDto | null
+  onOpenChange: (open: boolean) => void
+}) {
   const resetPassword = useResetUserPassword()
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -40,7 +53,8 @@ export function ResetPasswordDialog({ user, onOpenChange }: { user: UserDto | nu
           onOpenChange(false)
         },
         onError: (error) => {
-          if (!applyFieldErrors(form.setError, error, ['newPassword'])) toast.error(getErrorMessage(error))
+          if (!applyFieldErrors(form.setError, error, ['newPassword']))
+            toast.error(getErrorMessage(error))
         },
       }
     )
@@ -52,18 +66,34 @@ export function ResetPasswordDialog({ user, onOpenChange }: { user: UserDto | nu
         <DialogHeader>
           <DialogTitle>Đặt lại mật khẩu</DialogTitle>
           <DialogDescription>
-            Đặt mật khẩu mới cho <span className="text-foreground font-medium">{user?.fullName}</span> (@{user?.username}).
+            Đặt mật khẩu mới cho{' '}
+            <span className="text-foreground font-medium">{user?.fullName}</span> (@{user?.username}
+            ).
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} noValidate className="grid gap-4">
-          <FormField label="Mật khẩu mới" required error={errors.newPassword?.message} hint={PASSWORD_MESSAGE}>
-            <PasswordInput autoComplete="new-password" autoFocus {...form.register('newPassword')} />
+          <FormField
+            label="Mật khẩu mới"
+            required
+            error={errors.newPassword?.message}
+            hint={PASSWORD_MESSAGE}
+          >
+            <PasswordInput
+              autoComplete="new-password"
+              autoFocus
+              {...form.register('newPassword')}
+            />
           </FormField>
           <FormField label="Nhập lại mật khẩu mới" required error={errors.confirmPassword?.message}>
             <PasswordInput autoComplete="new-password" {...form.register('confirmPassword')} />
           </FormField>
           <DialogFooter className="mt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={resetPassword.isPending}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={resetPassword.isPending}
+            >
               Hủy
             </Button>
             <Button type="submit" disabled={resetPassword.isPending}>

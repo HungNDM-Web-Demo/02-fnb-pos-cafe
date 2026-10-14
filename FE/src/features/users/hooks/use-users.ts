@@ -40,7 +40,8 @@ export function useCreateUser() {
 export function useUpdateUser() {
   const invalidate = useInvalidateUsers()
   return useMutation({
-    mutationFn: ({ id, input }: { id: string; input: UpdateUserRequest }) => userService.update(id, input),
+    mutationFn: ({ id, input }: { id: string; input: UpdateUserRequest }) =>
+      userService.update(id, input),
     onSuccess: invalidate,
   })
 }
@@ -48,7 +49,8 @@ export function useUpdateUser() {
 export function useLockUser() {
   const invalidate = useInvalidateUsers()
   return useMutation({
-    mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) => userService.lock(id, { isActive }),
+    mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) =>
+      userService.lock(id, { isActive }),
     onSuccess: invalidate,
   })
 }

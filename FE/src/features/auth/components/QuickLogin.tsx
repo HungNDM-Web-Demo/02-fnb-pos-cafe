@@ -1,6 +1,14 @@
 'use client'
 
-import { ArrowRight, BadgeCheck, BriefcaseBusiness, Loader2, ShieldCheck, UserRound, type LucideIcon } from 'lucide-react'
+import {
+  ArrowRight,
+  BadgeCheck,
+  BriefcaseBusiness,
+  Loader2,
+  ShieldCheck,
+  UserRound,
+  type LucideIcon,
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { Skeleton } from '@/components/ui/skeleton'
 import { roleCodes } from '@/config/permissions'
@@ -29,7 +37,10 @@ export function QuickLogin({ onSuccess }: { onSuccess: (response: AuthResponse) 
     <section aria-labelledby="quick-login-title" className="space-y-3">
       <div className="flex items-center gap-3">
         <span className="bg-border h-px flex-1" aria-hidden="true" />
-        <h2 id="quick-login-title" className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+        <h2
+          id="quick-login-title"
+          className="text-muted-foreground text-xs font-medium tracking-wide uppercase"
+        >
           Hoặc đăng nhập nhanh để xem demo
         </h2>
         <span className="bg-border h-px flex-1" aria-hidden="true" />
@@ -37,7 +48,9 @@ export function QuickLogin({ onSuccess }: { onSuccess: (response: AuthResponse) 
 
       <div className="grid gap-2">
         {isLoading
-          ? Array.from({ length: 3 }, (_, i) => <Skeleton key={i} className="h-[4.5rem] w-full rounded-xl" />)
+          ? Array.from({ length: 3 }, (_, i) => (
+              <Skeleton key={i} className="h-[4.5rem] w-full rounded-xl" />
+            ))
           : accounts!.map((account) => {
               const Icon = ROLE_ICONS[account.roleCode] ?? BadgeCheck
               const pending = quickLogin.isPending && quickLogin.variables === account.roleCode
@@ -54,7 +67,7 @@ export function QuickLogin({ onSuccess }: { onSuccess: (response: AuthResponse) 
                   }
                   className={cn(
                     'group bg-card flex min-h-[4.5rem] w-full items-center gap-3 rounded-xl border px-4 py-3 text-left shadow-xs transition-[border-color,box-shadow,background-color] duration-200 outline-none',
-                    'hover:border-primary/50 hover:shadow-md focus-visible:ring-ring/50 focus-visible:ring-3 disabled:cursor-wait',
+                    'hover:border-primary/50 focus-visible:ring-ring/50 hover:shadow-md focus-visible:ring-3 disabled:cursor-wait',
                     quickLogin.isPending && !pending && 'opacity-60'
                   )}
                   aria-label={`Đăng nhập nhanh vai trò ${account.roleName}`}
@@ -68,11 +81,16 @@ export function QuickLogin({ onSuccess }: { onSuccess: (response: AuthResponse) 
                       <span className="text-muted-foreground text-xs">{account.fullName}</span>
                     </span>
                     {account.description && (
-                      <span className="text-muted-foreground mt-0.5 block text-sm leading-snug">{account.description}</span>
+                      <span className="text-muted-foreground mt-0.5 block text-sm leading-snug">
+                        {account.description}
+                      </span>
                     )}
                   </span>
                   {pending ? (
-                    <Loader2 className="text-primary size-5 shrink-0 animate-spin" aria-hidden="true" />
+                    <Loader2
+                      className="text-primary size-5 shrink-0 animate-spin"
+                      aria-hidden="true"
+                    />
                   ) : (
                     <ArrowRight
                       className="text-muted-foreground group-hover:text-primary size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"

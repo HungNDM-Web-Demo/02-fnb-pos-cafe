@@ -13,8 +13,8 @@
 | Ngành / loại khách hàng | Quán cafe, trà sữa 1–5 chi nhánh |
 | Loại sản phẩm | Màn hình bán hàng trên tablet + web quản lý |
 | Ý tưởng gốc | 1.1 · POS bán hàng quán cafe/trà sữa (`ZDOCS/02-KE-HOACH/DANH-SACH-Y-TUONG.md`) |
-| Người phụ trách | |
-| Trạng thái | Có tài liệu nghiệp vụ (SRS, use case, kịch bản demo, kịch bản kiểm thử), chưa code |
+| Người phụ trách | Mạnh Hùng (Pum) |
+| Trạng thái | Đã code BE + FE, chạy được cả hai chế độ (dữ liệu mẫu và BE thật trên Postgres) |
 
 ## 2. Vấn đề của khách hàng
 
@@ -81,9 +81,11 @@ flowchart LR
 
 | Dữ liệu | Số lượng | Ghi chú |
 | :--- | :---: | :--- |
-| Danh mục món | 6 | Cà phê, trà sữa, trà trái cây, đá xay, bánh, topping |
+| Danh mục món | 6 | Cà phê, trà sữa, trà trái cây, đá xay, soda và nước ép, bánh |
 | Món | 40 | Có ảnh, 2–3 size |
 | Topping | 12 |  |
 | Hóa đơn | ~3.000 | Trải đều 90 ngày, đông giờ 7–9h và 14–16h |
 | Ca làm | ~180 | 2 ca mỗi ngày, 90 ngày |
-| Khuyến mãi | 5 | Đang chạy, sắp chạy, đã hết |
+| Khuyến mãi | 5 | Đang chạy, sắp chạy, đã hết, tạm dừng |
+| Voucher | 5 | `GIAM20K` còn lượt, `HETHAN` hết hạn, `HETLUOT` hết lượt |
+| Khách tích điểm | 10 | P3 |

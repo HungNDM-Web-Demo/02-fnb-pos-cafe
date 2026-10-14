@@ -7,9 +7,22 @@ import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { FormField } from '@/components/shared/FormField'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { applyFieldErrors, getErrorMessage } from '@/lib/api-error'
 import { ROLE_CODE_MESSAGE } from '@/lib/validators'
@@ -41,7 +54,16 @@ export function RoleFormDialog({ open, onOpenChange, role, roles, onSaved }: Rol
 
   useEffect(() => {
     if (!open) return
-    form.reset(role ? { code: role.code, name: role.name, description: role.description ?? '', copyFromId: NONE } : EMPTY)
+    form.reset(
+      role
+        ? {
+            code: role.code,
+            name: role.name,
+            description: role.description ?? '',
+            copyFromId: NONE,
+          }
+        : EMPTY
+    )
   }, [open, role, form])
 
   const onError = (error: unknown) => {
@@ -73,7 +95,9 @@ export function RoleFormDialog({ open, onOpenChange, role, roles, onSaved }: Rol
       },
       {
         onSuccess: (saved) => {
-          toast.success(`Đã thêm vai trò ${saved.name}`, { description: 'Tiếp tục tick quyền trong ma trận rồi bấm Lưu.' })
+          toast.success(`Đã thêm vai trò ${saved.name}`, {
+            description: 'Tiếp tục tick quyền trong ma trận rồi bấm Lưu.',
+          })
           onSaved?.(saved)
           onOpenChange(false)
         },
@@ -88,7 +112,9 @@ export function RoleFormDialog({ open, onOpenChange, role, roles, onSaved }: Rol
         <DialogHeader>
           <DialogTitle>{role ? 'Sửa vai trò' : 'Thêm vai trò'}</DialogTitle>
           <DialogDescription>
-            {role ? 'Đổi tên hiển thị và mô tả của vai trò.' : 'Tạo vai trò mới, sau đó phân quyền trong ma trận.'}
+            {role
+              ? 'Đổi tên hiển thị và mô tả của vai trò.'
+              : 'Tạo vai trò mới, sau đó phân quyền trong ma trận.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} noValidate className="grid gap-4">
@@ -110,8 +136,16 @@ export function RoleFormDialog({ open, onOpenChange, role, roles, onSaved }: Rol
           <FormField label="Tên vai trò" required error={errors.name?.message}>
             <Input autoComplete="off" placeholder="vd: Thu ngân" {...form.register('name')} />
           </FormField>
-          <FormField label="Mô tả" error={errors.description?.message} hint="Vai trò này dùng để làm gì.">
-            <Textarea rows={3} placeholder="vd: Tạo đơn, thu tiền tại quầy" {...form.register('description')} />
+          <FormField
+            label="Mô tả"
+            error={errors.description?.message}
+            hint="Vai trò này dùng để làm gì."
+          >
+            <Textarea
+              rows={3}
+              placeholder="vd: Tạo đơn, thu tiền tại quầy"
+              {...form.register('description')}
+            />
           </FormField>
           {!role && (
             <FormField label="Sao chép quyền từ" htmlFor="copy-from">
@@ -137,7 +171,12 @@ export function RoleFormDialog({ open, onOpenChange, role, roles, onSaved }: Rol
             </FormField>
           )}
           <DialogFooter className="mt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={pending}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={pending}
+            >
               Hủy
             </Button>
             <Button type="submit" disabled={pending}>

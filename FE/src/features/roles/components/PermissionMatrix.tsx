@@ -41,11 +41,15 @@ function MatrixCheckbox({
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3',
         'data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
         'data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground',
-        'disabled:cursor-not-allowed disabled:opacity-60 dark:bg-input/30'
+        'dark:bg-input/30 disabled:cursor-not-allowed disabled:opacity-60'
       )}
     >
       <CheckboxPrimitive.Indicator className="flex items-center justify-center">
-        {checked === 'indeterminate' ? <Minus className="size-3.5" strokeWidth={3} /> : <Check className="size-3.5" strokeWidth={3} />}
+        {checked === 'indeterminate' ? (
+          <Minus className="size-3.5" strokeWidth={3} />
+        ) : (
+          <Check className="size-3.5" strokeWidth={3} />
+        )}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
@@ -94,7 +98,10 @@ export function PermissionMatrix({ groups, value, onChange, readOnly }: Permissi
         <caption className="sr-only">Ma trận phân quyền theo nhóm chức năng và hành động</caption>
         <thead>
           <tr className="bg-muted/50 border-b">
-            <th scope="col" className="text-muted-foreground h-12 px-4 text-left text-xs font-semibold tracking-wide uppercase">
+            <th
+              scope="col"
+              className="text-muted-foreground h-12 px-4 text-left text-xs font-semibold tracking-wide uppercase"
+            >
               <span className="flex items-center gap-3">
                 <MatrixCheckbox
                   checked={stateOf(allCodes)}
@@ -108,7 +115,11 @@ export function PermissionMatrix({ groups, value, onChange, readOnly }: Permissi
             {ACTIONS.map((action) => {
               const codes = columnCodes(action.key)
               return (
-                <th key={action.key} scope="col" className="text-muted-foreground h-12 w-20 px-2 text-center text-xs font-semibold tracking-wide uppercase">
+                <th
+                  key={action.key}
+                  scope="col"
+                  className="text-muted-foreground h-12 w-20 px-2 text-center text-xs font-semibold tracking-wide uppercase"
+                >
                   <span className="flex flex-col items-center gap-1.5">
                     {action.label}
                     <MatrixCheckbox
@@ -121,7 +132,10 @@ export function PermissionMatrix({ groups, value, onChange, readOnly }: Permissi
                 </th>
               )
             })}
-            <th scope="col" className="text-muted-foreground h-12 px-4 text-left text-xs font-semibold tracking-wide uppercase">
+            <th
+              scope="col"
+              className="text-muted-foreground h-12 px-4 text-left text-xs font-semibold tracking-wide uppercase"
+            >
               Khác {otherCodes.length === 0 && <span className="sr-only">(không có)</span>}
             </th>
           </tr>
@@ -131,10 +145,15 @@ export function PermissionMatrix({ groups, value, onChange, readOnly }: Permissi
             const codes = group.items.map((i) => i.code)
             const byAction = (key: string): PermissionItem | undefined =>
               group.items.find((i) => actionOf(i.code) === key)
-            const others = group.items.filter((i) => !ACTIONS.some((a) => a.key === actionOf(i.code)))
+            const others = group.items.filter(
+              (i) => !ACTIONS.some((a) => a.key === actionOf(i.code))
+            )
             const count = codes.filter((c) => selected.has(c)).length
             return (
-              <tr key={group.groupName} className="hover:bg-muted/30 border-b transition-colors last:border-0">
+              <tr
+                key={group.groupName}
+                className="hover:bg-muted/30 border-b transition-colors last:border-0"
+              >
                 <th scope="row" className="px-4 py-3 text-left font-normal">
                   <span className="flex items-center gap-3">
                     <MatrixCheckbox
@@ -176,7 +195,10 @@ export function PermissionMatrix({ groups, value, onChange, readOnly }: Permissi
                   {others.length > 0 ? (
                     <div className="flex flex-wrap gap-x-4 gap-y-2">
                       {others.map((item) => (
-                        <label key={item.code} className="flex cursor-pointer items-center gap-2 text-sm">
+                        <label
+                          key={item.code}
+                          className="flex cursor-pointer items-center gap-2 text-sm"
+                        >
                           <MatrixCheckbox
                             checked={selected.has(item.code)}
                             onChange={(on) => toggle([item.code], on)}

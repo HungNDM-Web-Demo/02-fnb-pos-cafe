@@ -48,8 +48,15 @@ export function ColorField({ id, value, onChange, disabled, invalid, ...props }:
       </div>
 
       <div className="flex items-center gap-2">
-        <label className="border-input relative size-10 shrink-0 cursor-pointer overflow-hidden rounded-md border shadow-xs" title="Chọn màu bất kỳ">
-          <span className="absolute inset-0" style={{ backgroundColor: hex ?? 'transparent' }} aria-hidden="true" />
+        <label
+          className="border-input relative size-10 shrink-0 cursor-pointer overflow-hidden rounded-md border shadow-xs"
+          title="Chọn màu bất kỳ"
+        >
+          <span
+            className="absolute inset-0"
+            style={{ backgroundColor: hex ?? 'transparent' }}
+            aria-hidden="true"
+          />
           <span className="sr-only">Chọn màu bất kỳ</span>
           <input
             type="color"
@@ -73,9 +80,19 @@ export function ColorField({ id, value, onChange, disabled, invalid, ...props }:
           className="w-32 font-mono uppercase"
         />
         {hex && (
-          <span className={cn('flex items-center gap-1.5 text-xs', passes ? 'text-success' : 'text-warning')}>
-            {passes ? <CircleCheck className="size-4" aria-hidden="true" /> : <CircleAlert className="size-4" aria-hidden="true" />}
-            Chữ {palette.lightForeground === '#FFFFFF' ? 'trắng' : 'tối'} trên nút: {formatNumber(palette.lightContrast, 1)}:1
+          <span
+            className={cn(
+              'flex items-center gap-1.5 text-xs',
+              passes ? 'text-success' : 'text-warning'
+            )}
+          >
+            {passes ? (
+              <CircleCheck className="size-4" aria-hidden="true" />
+            ) : (
+              <CircleAlert className="size-4" aria-hidden="true" />
+            )}
+            Chữ {palette.lightForeground === '#FFFFFF' ? 'trắng' : 'tối'} trên nút:{' '}
+            {formatNumber(palette.lightContrast, 1)}:1
             {passes ? ' · đạt' : ' · thấp, nên chọn màu đậm hơn'}
           </span>
         )}

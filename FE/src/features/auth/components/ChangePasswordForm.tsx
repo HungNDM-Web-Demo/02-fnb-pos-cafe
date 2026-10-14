@@ -41,16 +41,27 @@ export function ChangePasswordForm({ disabled }: { disabled?: boolean }) {
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-4">
       {disabled && (
-        <div className="bg-info/10 text-info border-info/25 flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm" role="note">
+        <div
+          className="bg-info/10 text-info border-info/25 flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm"
+          role="note"
+        >
           <Info className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <span>Tài khoản demo dùng chung mật khẩu nên không đổi được mật khẩu.</span>
         </div>
       )}
-      <fieldset disabled={disabled || changePassword.isPending} className="grid gap-4 disabled:opacity-70">
+      <fieldset
+        disabled={disabled || changePassword.isPending}
+        className="grid gap-4 disabled:opacity-70"
+      >
         <FormField label="Mật khẩu hiện tại" required error={errors.currentPassword?.message}>
           <PasswordInput autoComplete="current-password" {...form.register('currentPassword')} />
         </FormField>
-        <FormField label="Mật khẩu mới" required error={errors.newPassword?.message} hint={PASSWORD_MESSAGE}>
+        <FormField
+          label="Mật khẩu mới"
+          required
+          error={errors.newPassword?.message}
+          hint={PASSWORD_MESSAGE}
+        >
           <PasswordInput autoComplete="new-password" {...form.register('newPassword')} />
         </FormField>
         <FormField label="Nhập lại mật khẩu mới" required error={errors.confirmPassword?.message}>

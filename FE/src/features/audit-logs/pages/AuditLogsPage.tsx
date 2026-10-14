@@ -11,7 +11,13 @@ import { StatusBadge } from '@/components/shared/StatusBadge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { permissions } from '@/config/permissions'
 import { useRoles } from '@/features/roles/hooks/use-roles'
 import { useUsers } from '@/features/users/hooks/use-users'
@@ -23,7 +29,13 @@ import { AuditLogDetailDialog, type AuditValueFormatters } from '../components/A
 import { useAuditLogs } from '../hooks/use-audit-logs'
 import type { AuditAction, AuditLogDto } from '../types/audit-log.types'
 
-type Filters = { userId: string; entityName: string; action: AuditAction; fromDate: string; toDate: string }
+type Filters = {
+  userId: string
+  entityName: string
+  action: AuditAction
+  fromDate: string
+  toDate: string
+}
 
 function changedFields(log: AuditLogDto): string[] {
   try {
@@ -47,7 +59,13 @@ export function AuditLogsPage() {
   const [selected, setSelected] = useState<AuditLogDto | null>(null)
 
   const { state } = table
-  const hasFilters = !!(state.userId || state.entityName || state.action || state.fromDate || state.toDate)
+  const hasFilters = !!(
+    state.userId ||
+    state.entityName ||
+    state.action ||
+    state.fromDate ||
+    state.toDate
+  )
 
   const formatters = useMemo<AuditValueFormatters>(
     () => ({
@@ -68,7 +86,9 @@ export function AuditLogsPage() {
         cell: ({ row }) => (
           <div className="leading-tight">
             <div className="text-sm tabular-nums">{formatDateTime(row.original.createdAt)}</div>
-            <div className="text-muted-foreground text-xs">{formatRelativeTime(row.original.createdAt)}</div>
+            <div className="text-muted-foreground text-xs">
+              {formatRelativeTime(row.original.createdAt)}
+            </div>
           </div>
         ),
       },
@@ -87,7 +107,9 @@ export function AuditLogsPage() {
         header: 'Hành động',
         cell: ({ row }) => {
           const action = auditActionLabels[row.original.action]
-          return <StatusBadge tone={action?.tone}>{action?.label ?? row.original.action}</StatusBadge>
+          return (
+            <StatusBadge tone={action?.tone}>{action?.label ?? row.original.action}</StatusBadge>
+          )
         },
       },
       {
@@ -97,7 +119,9 @@ export function AuditLogsPage() {
           <div className="leading-tight">
             <div className="font-medium">{entityLabel(row.original.entityName)}</div>
             {row.original.entityId && (
-              <div className="text-muted-foreground font-mono text-xs">{row.original.entityId.slice(0, 8)}</div>
+              <div className="text-muted-foreground font-mono text-xs">
+                {row.original.entityId.slice(0, 8)}
+              </div>
             )}
           </div>
         ),
@@ -107,13 +131,16 @@ export function AuditLogsPage() {
         header: 'Nội dung',
         cell: ({ row }) => {
           const fields = changedFields(row.original)
-          if (row.original.action === 'Login') return <span className="text-muted-foreground text-sm">Đăng nhập hệ thống</span>
+          if (row.original.action === 'Login')
+            return <span className="text-muted-foreground text-sm">Đăng nhập hệ thống</span>
           if (!fields.length) return <span className="text-muted-foreground text-sm">—</span>
           const shown = fields.slice(0, 3).map(fieldLabel).join(', ')
           return (
             <span className="text-sm">
               {shown}
-              {fields.length > 3 && <span className="text-muted-foreground"> và {fields.length - 3} trường khác</span>}
+              {fields.length > 3 && (
+                <span className="text-muted-foreground"> và {fields.length - 3} trường khác</span>
+              )}
             </span>
           )
         },
@@ -122,7 +149,9 @@ export function AuditLogsPage() {
         id: 'open',
         header: () => <span className="sr-only">Xem chi tiết</span>,
         meta: { className: 'w-10 text-right' },
-        cell: () => <ChevronRight className="text-muted-foreground ml-auto size-4" aria-hidden="true" />,
+        cell: () => (
+          <ChevronRight className="text-muted-foreground ml-auto size-4" aria-hidden="true" />
+        ),
       },
     ],
     []
@@ -163,7 +192,9 @@ export function AuditLogsPage() {
           toolbar={
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto] lg:items-end">
               <div className="grid gap-1.5">
-                <Label htmlFor="filter-user" className="text-muted-foreground text-xs">Người thực hiện</Label>
+                <Label htmlFor="filter-user" className="text-muted-foreground text-xs">
+                  Người thực hiện
+                </Label>
                 <Select
                   value={state.userId ?? 'all'}
                   onValueChange={(v) => table.setFilter('userId', v === 'all' ? undefined : v)}
@@ -183,8 +214,13 @@ export function AuditLogsPage() {
                 </Select>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="filter-entity" className="text-muted-foreground text-xs">Đối tượng</Label>
-                <Select value={state.entityName ?? 'all'} onValueChange={(v) => table.setFilter('entityName', v === 'all' ? undefined : v)}>
+                <Label htmlFor="filter-entity" className="text-muted-foreground text-xs">
+                  Đối tượng
+                </Label>
+                <Select
+                  value={state.entityName ?? 'all'}
+                  onValueChange={(v) => table.setFilter('entityName', v === 'all' ? undefined : v)}
+                >
                   <SelectTrigger id="filter-entity">
                     <SelectValue />
                   </SelectTrigger>
@@ -199,10 +235,14 @@ export function AuditLogsPage() {
                 </Select>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="filter-action" className="text-muted-foreground text-xs">Hành động</Label>
+                <Label htmlFor="filter-action" className="text-muted-foreground text-xs">
+                  Hành động
+                </Label>
                 <Select
                   value={state.action ?? 'all'}
-                  onValueChange={(v) => table.setFilter('action', v === 'all' ? undefined : (v as AuditAction))}
+                  onValueChange={(v) =>
+                    table.setFilter('action', v === 'all' ? undefined : (v as AuditAction))
+                  }
                 >
                   <SelectTrigger id="filter-action">
                     <SelectValue />
@@ -218,7 +258,9 @@ export function AuditLogsPage() {
                 </Select>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="filter-from" className="text-muted-foreground text-xs">Từ ngày</Label>
+                <Label htmlFor="filter-from" className="text-muted-foreground text-xs">
+                  Từ ngày
+                </Label>
                 <Input
                   id="filter-from"
                   type="date"
@@ -228,7 +270,9 @@ export function AuditLogsPage() {
                 />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="filter-to" className="text-muted-foreground text-xs">Đến ngày</Label>
+                <Label htmlFor="filter-to" className="text-muted-foreground text-xs">
+                  Đến ngày
+                </Label>
                 <Input
                   id="filter-to"
                   type="date"
@@ -237,7 +281,12 @@ export function AuditLogsPage() {
                   onChange={(e) => table.setFilter('toDate', e.target.value || undefined)}
                 />
               </div>
-              <Button variant="ghost" onClick={clear} disabled={!hasFilters} className="text-muted-foreground">
+              <Button
+                variant="ghost"
+                onClick={clear}
+                disabled={!hasFilters}
+                className="text-muted-foreground"
+              >
                 <X aria-hidden="true" />
                 Xóa lọc
               </Button>
@@ -265,7 +314,11 @@ export function AuditLogsPage() {
           }
         />
       </div>
-      <AuditLogDetailDialog log={selected} onOpenChange={(open) => !open && setSelected(null)} formatters={formatters} />
+      <AuditLogDetailDialog
+        log={selected}
+        onOpenChange={(open) => !open && setSelected(null)}
+        formatters={formatters}
+      />
     </PermissionGuard>
   )
 }

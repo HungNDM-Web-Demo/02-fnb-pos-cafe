@@ -67,7 +67,8 @@ function validateProfile(input: UpdateUserRequest, errors: Record<string, string
   if (input.phone?.trim() && !isValidPhone(input.phone)) errors.phone = PHONE_MESSAGE
   const roleIds = activeRoles().map((r) => r.id)
   if (!input.roleIds?.length) errors.roleIds = 'Chọn ít nhất một vai trò'
-  else if (input.roleIds.some((id) => !roleIds.includes(id))) errors.roleIds = 'Vai trò không tồn tại'
+  else if (input.roleIds.some((id) => !roleIds.includes(id)))
+    errors.roleIds = 'Vai trò không tồn tại'
 }
 
 /** BR-SYS-05, BR-SYS-10: không khóa/xóa/đặt lại mật khẩu tài khoản demo hoặc chính mình. */
@@ -107,7 +108,9 @@ export const userMock = {
 
     // BR-SYS-01: không trùng tên đăng nhập (TC-SYS-05 báo lỗi tại ô)
     if (liveUsers().some((u) => u.username === username)) {
-      throw conflict(`Tên đăng nhập ${username} đã tồn tại.`, { username: 'Tên đăng nhập đã tồn tại' })
+      throw conflict(`Tên đăng nhập ${username} đã tồn tại.`, {
+        username: 'Tên đăng nhập đã tồn tại',
+      })
     }
 
     const user: MockUser = {
@@ -164,10 +167,12 @@ export const userMock = {
     const { user: me } = requirePermission(permissions.users.update)
     const target = getOrThrow(id)
     guardProtected(target, me.id, 'đặt lại mật khẩu')
-    if (!isValidPassword(input.newPassword ?? '')) throw validation({ newPassword: PASSWORD_MESSAGE })
+    if (!isValidPassword(input.newPassword ?? ''))
+      throw validation({ newPassword: PASSWORD_MESSAGE })
     usersDb.update(id, { passwordHash: hashPassword(target.username, input.newPassword) })
     // Thu hồi mọi phiên đang mở của tài khoản này
-    refreshTokensDb.all()
+    refreshTokensDb
+      .all()
       .filter((t) => t.userId === id && !t.revokedAt)
       .forEach((t) => refreshTokensDb.update(t.id, { revokedAt: new Date().toISOString() }))
   },

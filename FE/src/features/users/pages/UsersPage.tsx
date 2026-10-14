@@ -2,7 +2,19 @@
 
 import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { KeyRound, Lock, LockOpen, MoreHorizontal, Pencil, Plus, SearchX, Trash2, UserPlus, Users, X } from 'lucide-react'
+import {
+  KeyRound,
+  Lock,
+  LockOpen,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  SearchX,
+  Trash2,
+  UserPlus,
+  Users,
+  X,
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog'
 import { DataTable } from '@/components/shared/DataTable'
@@ -22,7 +34,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { permissions } from '@/config/permissions'
 import { useRoles } from '@/features/roles/hooks/use-roles'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -40,7 +58,8 @@ type FormState = { open: boolean; user: UserDto | null }
 /** BR-SYS-05, BR-SYS-10: lý do không được khóa/xóa/đặt lại mật khẩu (null là được). */
 function protectedReason(user: UserDto, currentUserId?: string): string | null {
   if (user.isDemoAccount) return 'Tài khoản demo không được khóa, xóa hay đặt lại mật khẩu.'
-  if (user.id === currentUserId) return 'Không thể tự khóa, xóa hay đặt lại mật khẩu của chính mình. Đổi mật khẩu ở Hồ sơ cá nhân.'
+  if (user.id === currentUserId)
+    return 'Không thể tự khóa, xóa hay đặt lại mật khẩu của chính mình. Đổi mật khẩu ở Hồ sơ cá nhân.'
   return null
 }
 
@@ -63,7 +82,8 @@ export function UsersPage() {
   const [deleteTarget, setDeleteTarget] = useState<UserDto | null>(null)
   const [searchKey, setSearchKey] = useState(0)
 
-  const hasFilters = !!table.state.search || !!table.state.roleId || table.state.isActive !== undefined
+  const hasFilters =
+    !!table.state.search || !!table.state.roleId || table.state.isActive !== undefined
 
   const clearFilters = () => {
     table.resetFilters()
@@ -84,8 +104,16 @@ export function UsersPage() {
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="truncate font-medium">{u.fullName}</span>
-                  {u.id === me?.id && <StatusBadge tone="primary" dot={false}>Bạn</StatusBadge>}
-                  {u.isDemoAccount && <StatusBadge tone="warning" dot={false}>Demo</StatusBadge>}
+                  {u.id === me?.id && (
+                    <StatusBadge tone="primary" dot={false}>
+                      Bạn
+                    </StatusBadge>
+                  )}
+                  {u.isDemoAccount && (
+                    <StatusBadge tone="warning" dot={false}>
+                      Demo
+                    </StatusBadge>
+                  )}
                 </div>
                 <span className="text-muted-foreground text-xs">@{u.username}</span>
               </div>
@@ -98,8 +126,12 @@ export function UsersPage() {
         header: 'Liên hệ',
         cell: ({ row }) => (
           <div className="text-sm leading-tight">
-            <div className="truncate">{row.original.email || <span className="text-muted-foreground">Chưa có email</span>}</div>
-            <div className="text-muted-foreground mt-0.5 tabular-nums">{formatPhone(row.original.phone, '')}</div>
+            <div className="truncate">
+              {row.original.email || <span className="text-muted-foreground">Chưa có email</span>}
+            </div>
+            <div className="text-muted-foreground mt-0.5 tabular-nums">
+              {formatPhone(row.original.phone, '')}
+            </div>
           </div>
         ),
       },
@@ -143,7 +175,9 @@ export function UsersPage() {
         id: 'createdAt',
         header: 'Ngày tạo',
         enableSorting: true,
-        cell: ({ row }) => <span className="text-sm tabular-nums">{formatDate(row.original.createdAt)}</span>,
+        cell: ({ row }) => (
+          <span className="text-sm tabular-nums">{formatDate(row.original.createdAt)}</span>
+        ),
       },
     ]
 
@@ -163,17 +197,30 @@ export function UsersPage() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64">
-                <DropdownMenuLabel className="text-muted-foreground truncate text-xs font-normal">{u.fullName}</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-muted-foreground truncate text-xs font-normal">
+                  {u.fullName}
+                </DropdownMenuLabel>
                 {canUpdate && (
                   <>
-                    <DropdownMenuItem className="h-9" onSelect={() => setForm({ open: true, user: u })}>
+                    <DropdownMenuItem
+                      className="h-9"
+                      onSelect={() => setForm({ open: true, user: u })}
+                    >
                       <Pencil aria-hidden="true" /> Sửa thông tin, vai trò
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="h-9" disabled={!!reason} onSelect={() => setLockTarget(u)}>
+                    <DropdownMenuItem
+                      className="h-9"
+                      disabled={!!reason}
+                      onSelect={() => setLockTarget(u)}
+                    >
                       {u.isActive ? <Lock aria-hidden="true" /> : <LockOpen aria-hidden="true" />}
                       {u.isActive ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="h-9" disabled={!!reason} onSelect={() => setResetTarget(u)}>
+                    <DropdownMenuItem
+                      className="h-9"
+                      disabled={!!reason}
+                      onSelect={() => setResetTarget(u)}
+                    >
                       <KeyRound aria-hidden="true" /> Đặt lại mật khẩu
                     </DropdownMenuItem>
                   </>
@@ -192,7 +239,9 @@ export function UsersPage() {
                   </>
                 )}
                 {reason && (
-                  <p className="bg-muted/60 text-muted-foreground mt-1 rounded-sm px-2 py-1.5 text-xs leading-snug">{reason}</p>
+                  <p className="bg-muted/60 text-muted-foreground mt-1 rounded-sm px-2 py-1.5 text-xs leading-snug">
+                    {reason}
+                  </p>
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
@@ -208,7 +257,9 @@ export function UsersPage() {
     const isActive = !lockTarget.isActive
     try {
       await lockUser.mutateAsync({ id: lockTarget.id, isActive })
-      toast.success(isActive ? `Đã mở khóa ${lockTarget.username}` : `Đã khóa ${lockTarget.username}`)
+      toast.success(
+        isActive ? `Đã mở khóa ${lockTarget.username}` : `Đã khóa ${lockTarget.username}`
+      )
     } catch (error) {
       toast.error(getErrorMessage(error))
       throw error
@@ -254,7 +305,11 @@ export function UsersPage() {
           error={users.error}
           onRetry={() => void users.refetch()}
           minWidth={960}
-          sorting={{ sortBy: table.state.sortBy, sortDir: table.state.sortDir, onSortChange: table.setSort }}
+          sorting={{
+            sortBy: table.state.sortBy,
+            sortDir: table.state.sortDir,
+            onSortChange: table.setSort,
+          }}
           pagination={
             users.data && {
               page: users.data.page,
@@ -293,8 +348,16 @@ export function UsersPage() {
                   </SelectContent>
                 </Select>
                 <Select
-                  value={table.state.isActive === undefined ? 'all' : table.state.isActive ? 'active' : 'locked'}
-                  onValueChange={(v) => table.setFilter('isActive', v === 'all' ? undefined : v === 'active')}
+                  value={
+                    table.state.isActive === undefined
+                      ? 'all'
+                      : table.state.isActive
+                        ? 'active'
+                        : 'locked'
+                  }
+                  onValueChange={(v) =>
+                    table.setFilter('isActive', v === 'all' ? undefined : v === 'active')
+                  }
                 >
                   <SelectTrigger className="sm:w-44" aria-label="Lọc theo trạng thái">
                     <SelectValue />
@@ -307,7 +370,11 @@ export function UsersPage() {
                 </Select>
               </div>
               {hasFilters && (
-                <Button variant="ghost" onClick={clearFilters} className="text-muted-foreground sm:ml-auto">
+                <Button
+                  variant="ghost"
+                  onClick={clearFilters}
+                  className="text-muted-foreground sm:ml-auto"
+                >
                   <X aria-hidden="true" />
                   Xóa lọc
                 </Button>
@@ -353,7 +420,10 @@ export function UsersPage() {
         roles={roleOptions}
         rolesLoading={roles.isLoading}
       />
-      <ResetPasswordDialog user={resetTarget} onOpenChange={(open) => !open && setResetTarget(null)} />
+      <ResetPasswordDialog
+        user={resetTarget}
+        onOpenChange={(open) => !open && setResetTarget(null)}
+      />
       <ConfirmDialog
         open={!!lockTarget}
         onOpenChange={(open) => !open && setLockTarget(null)}

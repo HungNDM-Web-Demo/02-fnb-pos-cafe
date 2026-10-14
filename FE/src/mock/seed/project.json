@@ -1,0 +1,113 @@
+{
+  "$comment": "Phần riêng của dự án, ghép thêm vào system.json khi seed (FE mock và BE SystemSeeder). permissions: quyền nghiệp vụ (docs/07-DANH-SACH-API.md §1); roles: CASHIER mới, MANAGER đổi tên; roleGrants: quyền cấp thêm cho vai trò có sẵn; users: thungan, thungan2 mới, quanly ghi đè mô tả, nhanvien bỏ; settings: Brand.* và Store.* (thông tin quán in trên bill, docs/06 §3); homeAfterLogin: trang mở sau khi đăng nhập (FE chuyển Thu ngân sang /pos theo quyền, docs/07 §4).",
+  "permissions": [
+    { "code": "menu-items.view", "groupName": "Thực đơn", "name": "Xem thực đơn", "sortOrder": 210 },
+    { "code": "menu-items.create", "groupName": "Thực đơn", "name": "Thêm danh mục, món, topping", "sortOrder": 211 },
+    { "code": "menu-items.update", "groupName": "Thực đơn", "name": "Sửa, ẩn/hiện, sắp xếp thực đơn", "sortOrder": 212 },
+    { "code": "menu-items.delete", "groupName": "Thực đơn", "name": "Xóa món chưa bán, danh mục trống, topping chưa bán", "sortOrder": 213 },
+    { "code": "menu-items.availability", "groupName": "Thực đơn", "name": "Báo tạm hết, bán lại", "sortOrder": 214 },
+    { "code": "orders.create", "groupName": "Bán hàng", "name": "Bán hàng, giữ đơn, thanh toán", "sortOrder": 220 },
+    { "code": "orders.view", "groupName": "Bán hàng", "name": "Tra cứu hóa đơn của mình", "sortOrder": 221 },
+    { "code": "orders.view-all", "groupName": "Bán hàng", "name": "Tra cứu hóa đơn của mọi thu ngân", "sortOrder": 222 },
+    { "code": "orders.discount", "groupName": "Bán hàng", "name": "Giảm giá trong hạn mức, nhập voucher", "sortOrder": 223 },
+    { "code": "orders.discount-override", "groupName": "Bán hàng", "name": "Xác nhận giảm giá vượt hạn mức", "sortOrder": 224 },
+    { "code": "orders.reprint", "groupName": "Bán hàng", "name": "In lại hóa đơn", "sortOrder": 225 },
+    { "code": "orders.cancel", "groupName": "Bán hàng", "name": "Hủy hóa đơn", "sortOrder": 226 },
+    { "code": "shifts.operate", "groupName": "Ca làm", "name": "Mở ca, chốt ca của mình", "sortOrder": 230 },
+    { "code": "shifts.view", "groupName": "Ca làm", "name": "Xem mọi ca", "sortOrder": 231 },
+    { "code": "shifts.review", "groupName": "Ca làm", "name": "Ghi chú xử lý ca cần kiểm tra", "sortOrder": 232 },
+    { "code": "promotions.view", "groupName": "Khuyến mãi", "name": "Xem khuyến mãi, voucher", "sortOrder": 240 },
+    { "code": "promotions.create", "groupName": "Khuyến mãi", "name": "Thêm khuyến mãi, voucher", "sortOrder": 241 },
+    { "code": "promotions.update", "groupName": "Khuyến mãi", "name": "Sửa, tạm dừng khuyến mãi, voucher", "sortOrder": 242 },
+    { "code": "promotions.delete", "groupName": "Khuyến mãi", "name": "Xóa khuyến mãi, voucher", "sortOrder": 243 },
+    { "code": "reports.view", "groupName": "Báo cáo", "name": "Xem tổng quan doanh thu, báo cáo", "sortOrder": 250 },
+    { "code": "customers.view", "groupName": "Khách hàng", "name": "Tra cứu khách, xem danh sách, lịch sử", "sortOrder": 260 },
+    { "code": "customers.create", "groupName": "Khách hàng", "name": "Thêm nhanh khách", "sortOrder": 261 }
+  ],
+  "roles": [
+    { "code": "MANAGER", "name": "Quản lý quán", "description": "Thực đơn, khuyến mãi, kiểm tra ca, báo cáo, duyệt giảm giá vượt mức, hủy hóa đơn" },
+    {
+      "code": "CASHIER",
+      "name": "Thu ngân",
+      "description": "Bán hàng, thanh toán, mở ca, chốt ca; chỉ thấy hóa đơn trong ca của mình",
+      "isSystem": true,
+      "permissions": [
+        "menu-items.view",
+        "menu-items.availability",
+        "orders.create",
+        "orders.view",
+        "orders.discount",
+        "orders.reprint",
+        "shifts.operate",
+        "customers.view",
+        "customers.create"
+      ]
+    }
+  ],
+  "roleGrants": {
+    "MANAGER": [
+      "menu-items.view",
+      "menu-items.create",
+      "menu-items.update",
+      "menu-items.delete",
+      "menu-items.availability",
+      "orders.create",
+      "orders.view",
+      "orders.view-all",
+      "orders.discount",
+      "orders.discount-override",
+      "orders.reprint",
+      "orders.cancel",
+      "shifts.operate",
+      "shifts.view",
+      "shifts.review",
+      "promotions.view",
+      "promotions.create",
+      "promotions.update",
+      "promotions.delete",
+      "reports.view",
+      "customers.view",
+      "customers.create"
+    ]
+  },
+  "users": [
+    { "username": "admin", "description": "Phân quyền, tài khoản, thương hiệu, cài đặt quán" },
+    { "username": "quanly", "description": "Tổng quan, thực đơn, khuyến mãi, kiểm tra ca, báo cáo, duyệt giảm giá" },
+    {
+      "username": "thungan",
+      "fullName": "Phạm Thị Hồng Nhung",
+      "email": "thungan@example.com",
+      "phone": "0123456784",
+      "roles": ["CASHIER"],
+      "isDemoAccount": true,
+      "quickLogin": true,
+      "sortOrder": 3,
+      "description": "Mở ca, bán hàng, thanh toán, chốt ca"
+    },
+    {
+      "username": "thungan2",
+      "fullName": "Võ Minh Tuấn",
+      "email": "thungan2@example.com",
+      "phone": "0123456785",
+      "roles": ["CASHIER"],
+      "isDemoAccount": true,
+      "quickLogin": false,
+      "sortOrder": 4,
+      "description": "Thu ngân thứ hai trong dữ liệu mẫu (ca chiều), để báo cáo theo thu ngân có hai người"
+    },
+    { "username": "nhanvien", "enabled": false }
+  ],
+  "settings": [
+    { "key": "Brand.AppName", "value": "POS Quán Cafe", "groupName": "Thương hiệu" },
+    { "key": "Brand.LogoUrl", "value": "/logo/logo-mark.svg", "groupName": "Thương hiệu" },
+    { "key": "Brand.PrimaryColor", "value": "#B45309", "groupName": "Thương hiệu" },
+    { "key": "Store.Name", "value": "Mộc Cafe", "groupName": "Quán" },
+    { "key": "Store.Address", "value": "25 Lê Lợi, Hải Châu, Đà Nẵng", "groupName": "Quán" },
+    { "key": "Store.Phone", "value": "0236 3 555 999", "groupName": "Quán" },
+    { "key": "Store.ReceiptFooter", "value": "Cảm ơn quý khách, hẹn gặp lại!", "groupName": "Quán" },
+    { "key": "Store.BankBin", "value": "970415", "groupName": "Quán" },
+    { "key": "Store.BankAccount", "value": "0000000000", "groupName": "Quán" },
+    { "key": "Store.BankAccountName", "value": "MOC CAFE", "groupName": "Quán" }
+  ],
+  "homeAfterLogin": "/dashboard"
+}

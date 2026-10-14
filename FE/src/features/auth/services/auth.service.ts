@@ -12,7 +12,9 @@ import type {
 
 export const authService = {
   login: (request: LoginRequest): Promise<AuthResponse> =>
-    isMockMode() ? authMock.login(request) : apiCall.post<AuthResponse>(apiRoutes.auth.login, request),
+    isMockMode()
+      ? authMock.login(request)
+      : apiCall.post<AuthResponse>(apiRoutes.auth.login, request),
 
   logout: (request: LogoutRequest): Promise<void> =>
     isMockMode() ? authMock.logout(request) : apiCall.post(apiRoutes.auth.logout, request),

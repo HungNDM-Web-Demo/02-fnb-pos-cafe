@@ -287,7 +287,8 @@ stateDiagram-v2
 | `menu-items.create` / `update` / `delete` | Quản lý danh mục, món, topping | ✓ | ✓ | |
 | `menu-items.availability` | Báo tạm hết, bán lại | ✓ | ✓ | ✓ |
 | `orders.create` | Bán hàng, thanh toán | ✓ | ✓ | ✓ |
-| `orders.view` | Tra cứu hóa đơn (thu ngân chỉ thấy hóa đơn trong ca của mình) | ✓ | ✓ | ✓ |
+| `orders.view` | Tra cứu hóa đơn của mình (thu ngân chỉ thấy hóa đơn trong ca của mình) | ✓ | ✓ | ✓ |
+| `orders.view-all` | Tra cứu hóa đơn của mọi thu ngân | ✓ | ✓ | |
 | `orders.discount` | Giảm giá trong hạn mức | ✓ | ✓ | ✓ |
 | `orders.discount-override` | Xác nhận giảm giá vượt hạn mức | ✓ | ✓ | |
 | `orders.reprint` | In lại hóa đơn | ✓ | ✓ | ✓ |

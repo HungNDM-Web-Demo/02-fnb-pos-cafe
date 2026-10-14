@@ -83,7 +83,10 @@ export function GeneralSettingsPage() {
 
   const onSubmit = form.handleSubmit((values) => {
     const items = [
-      ...(Object.keys(FIELD_KEYS) as KnownField[]).map((field) => ({ key: FIELD_KEYS[field], value: values[field] })),
+      ...(Object.keys(FIELD_KEYS) as KnownField[]).map((field) => ({
+        key: FIELD_KEYS[field],
+        value: values[field],
+      })),
       ...values.extras.map(({ key, value }) => ({ key, value })),
     ]
     updateSettings.mutate(
@@ -91,7 +94,9 @@ export function GeneralSettingsPage() {
       {
         onSuccess: () => {
           form.reset(values)
-          toast.success('Đã lưu cài đặt', { description: 'Tên, logo và màu mới đã áp dụng cho toàn bộ ứng dụng.' })
+          toast.success('Đã lưu cài đặt', {
+            description: 'Tên, logo và màu mới đã áp dụng cho toàn bộ ứng dụng.',
+          })
         },
         onError: (error) => toast.error(getErrorMessage(error)),
       }
@@ -101,12 +106,25 @@ export function GeneralSettingsPage() {
   const disabled = !canUpdate || updateSettings.isPending
   const saveButtons = canUpdate && (
     <>
-      <Button type="button" variant="outline" disabled={!isDirty || updateSettings.isPending} onClick={() => form.reset()}>
+      <Button
+        type="button"
+        variant="outline"
+        disabled={!isDirty || updateSettings.isPending}
+        onClick={() => form.reset()}
+      >
         <Undo2 aria-hidden="true" />
         Hủy thay đổi
       </Button>
-      <Button type="submit" form="general-settings-form" disabled={!isDirty || updateSettings.isPending}>
-        {updateSettings.isPending ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Save aria-hidden="true" />}
+      <Button
+        type="submit"
+        form="general-settings-form"
+        disabled={!isDirty || updateSettings.isPending}
+      >
+        {updateSettings.isPending ? (
+          <Loader2 className="animate-spin" aria-hidden="true" />
+        ) : (
+          <Save aria-hidden="true" />
+        )}
         Lưu thay đổi
       </Button>
     </>
@@ -132,10 +150,18 @@ export function GeneralSettingsPage() {
             <Skeleton className="h-80 rounded-xl" />
           </div>
         ) : (
-          <form id="general-settings-form" onSubmit={onSubmit} noValidate className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
+          <form
+            id="general-settings-form"
+            onSubmit={onSubmit}
+            noValidate
+            className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]"
+          >
             <fieldset disabled={disabled} className="min-w-0 space-y-6">
               {!canUpdate && (
-                <div className="bg-info/10 text-info border-info/25 flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm" role="note">
+                <div
+                  className="bg-info/10 text-info border-info/25 flex items-start gap-2 rounded-lg border px-3 py-2.5 text-sm"
+                  role="note"
+                >
                   <Info className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                   Bạn chỉ có quyền xem cài đặt.
                 </div>
@@ -147,7 +173,9 @@ export function GeneralSettingsPage() {
                     <Palette className="text-primary size-4" aria-hidden="true" />
                     Thương hiệu
                   </CardTitle>
-                  <CardDescription>Hiển thị ở trang đăng nhập, thanh bên, tiêu đề trình duyệt.</CardDescription>
+                  <CardDescription>
+                    Hiển thị ở trang đăng nhập, thanh bên, tiêu đề trình duyệt.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-5">
                   <FormField label="Tên ứng dụng" required error={errors.appName?.message}>
@@ -159,11 +187,20 @@ export function GeneralSettingsPage() {
                       control={form.control}
                       name="logoUrl"
                       render={({ field }) => (
-                        <LogoUploader value={field.value} appName={appName} onChange={(url) => field.onChange(url)} disabled={disabled} />
+                        <LogoUploader
+                          value={field.value}
+                          appName={appName}
+                          onChange={(url) => field.onChange(url)}
+                          disabled={disabled}
+                        />
                       )}
                     />
                   </div>
-                  <FormField label="Màu chủ đạo" htmlFor="primary-color" error={errors.primaryColor?.message}>
+                  <FormField
+                    label="Màu chủ đạo"
+                    htmlFor="primary-color"
+                    error={errors.primaryColor?.message}
+                  >
                     <Controller
                       control={form.control}
                       name="primaryColor"
@@ -190,23 +227,54 @@ export function GeneralSettingsPage() {
                   <CardDescription>In trên hóa đơn, chân trang và trang đăng nhập.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4 sm:grid-cols-2">
-                  <FormField label="Tên doanh nghiệp" error={errors.companyName?.message} className="sm:col-span-2">
+                  <FormField
+                    label="Tên doanh nghiệp"
+                    error={errors.companyName?.message}
+                    className="sm:col-span-2"
+                  >
                     <Input placeholder="vd: Công ty TNHH ABC" {...form.register('companyName')} />
                   </FormField>
                   <FormField label="Hotline" error={errors.companyHotline?.message}>
-                    <Input type="tel" inputMode="tel" placeholder="vd: 0909 123 456" {...form.register('companyHotline')} />
+                    <Input
+                      type="tel"
+                      inputMode="tel"
+                      placeholder="vd: 0909 123 456"
+                      {...form.register('companyHotline')}
+                    />
                   </FormField>
-                  <FormField label="Zalo" error={errors.companyZalo?.message} hint="Số Zalo hoặc link https://zalo.me/…">
+                  <FormField
+                    label="Zalo"
+                    error={errors.companyZalo?.message}
+                    hint="Số Zalo hoặc link https://zalo.me/…"
+                  >
                     <Input placeholder="vd: 0909123456" {...form.register('companyZalo')} />
                   </FormField>
                   <FormField label="Email" error={errors.companyEmail?.message}>
-                    <Input type="email" inputMode="email" placeholder="vd: lienhe@congty.vn" {...form.register('companyEmail')} />
+                    <Input
+                      type="email"
+                      inputMode="email"
+                      placeholder="vd: lienhe@congty.vn"
+                      {...form.register('companyEmail')}
+                    />
                   </FormField>
                   <FormField label="Website" error={errors.companyWebsite?.message}>
-                    <Input type="url" inputMode="url" placeholder="vd: https://congty.vn" {...form.register('companyWebsite')} />
+                    <Input
+                      type="url"
+                      inputMode="url"
+                      placeholder="vd: https://congty.vn"
+                      {...form.register('companyWebsite')}
+                    />
                   </FormField>
-                  <FormField label="Địa chỉ" error={errors.companyAddress?.message} className="sm:col-span-2">
-                    <Textarea rows={2} placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố" {...form.register('companyAddress')} />
+                  <FormField
+                    label="Địa chỉ"
+                    error={errors.companyAddress?.message}
+                    className="sm:col-span-2"
+                  >
+                    <Textarea
+                      rows={2}
+                      placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố"
+                      {...form.register('companyAddress')}
+                    />
                   </FormField>
                 </CardContent>
               </Card>
@@ -226,7 +294,11 @@ export function GeneralSettingsPage() {
                 </Card>
               ))}
 
-              {canUpdate && <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">{saveButtons}</div>}
+              {canUpdate && (
+                <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                  {saveButtons}
+                </div>
+              )}
             </fieldset>
 
             <aside className="space-y-3 xl:sticky xl:top-20">
@@ -236,8 +308,8 @@ export function GeneralSettingsPage() {
               </h2>
               <BrandPreview appName={appName} logoUrl={logoUrl} primaryColor={primaryColor} />
               <p className="text-muted-foreground text-xs">
-                Thay đổi chỉ áp dụng cho mọi người sau khi bấm &quot;Lưu thay đổi&quot;. Muốn thử nhanh màu khi trình diễn,
-                dùng thanh công cụ demo.
+                Thay đổi chỉ áp dụng cho mọi người sau khi bấm &quot;Lưu thay đổi&quot;. Muốn thử
+                nhanh màu khi trình diễn, dùng thanh công cụ demo.
               </p>
             </aside>
           </form>

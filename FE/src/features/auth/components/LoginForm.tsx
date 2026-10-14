@@ -62,11 +62,26 @@ export function LoginForm({ onSuccess }: { onSuccess: (response: AuthResponse) =
       </FormField>
 
       <FormField label="Mật khẩu" error={errors.password?.message}>
-        <PasswordInput autoComplete="current-password" placeholder="Nhập mật khẩu" className="h-11" {...form.register('password')} />
+        <PasswordInput
+          autoComplete="current-password"
+          placeholder="Nhập mật khẩu"
+          className="h-11"
+          {...form.register('password')}
+        />
       </FormField>
 
-      <Button type="submit" size="lg" className="mt-1 w-full" disabled={login.isPending} aria-busy={login.isPending}>
-        {login.isPending ? <Loader2 className="animate-spin" aria-hidden="true" /> : <LogIn aria-hidden="true" />}
+      <Button
+        type="submit"
+        size="lg"
+        className="mt-1 w-full"
+        disabled={login.isPending}
+        aria-busy={login.isPending}
+      >
+        {login.isPending ? (
+          <Loader2 className="animate-spin" aria-hidden="true" />
+        ) : (
+          <LogIn aria-hidden="true" />
+        )}
         {login.isPending ? 'Đang đăng nhập…' : 'Đăng nhập'}
       </Button>
     </form>

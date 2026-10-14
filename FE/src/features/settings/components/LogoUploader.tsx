@@ -29,7 +29,8 @@ export function LogoUploader({ value, appName, onChange, disabled }: LogoUploade
   const handleFile = (file: File | undefined) => {
     if (!file) return
     setError(null)
-    if (!ACCEPT.split(',').includes(file.type)) return setError('Chỉ nhận ảnh JPG, PNG, WebP hoặc SVG.')
+    if (!ACCEPT.split(',').includes(file.type))
+      return setError('Chỉ nhận ảnh JPG, PNG, WebP hoặc SVG.')
     if (file.size > MAX_BYTES) return setError('Ảnh tối đa 2 MB.')
     upload.mutate(file, {
       onSuccess: (image) => {
@@ -43,7 +44,12 @@ export function LogoUploader({ value, appName, onChange, disabled }: LogoUploade
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
       <div className="bg-muted/50 flex size-24 shrink-0 items-center justify-center rounded-xl border border-dashed">
-        <BrandMark size="lg" logoUrl={value} appName={appName || 'Ứng dụng'} className="size-16 text-xl" />
+        <BrandMark
+          size="lg"
+          logoUrl={value}
+          appName={appName || 'Ứng dụng'}
+          className="size-16 text-xl"
+        />
       </div>
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
@@ -53,11 +59,20 @@ export function LogoUploader({ value, appName, onChange, disabled }: LogoUploade
             disabled={disabled || upload.isPending}
             onClick={() => inputRef.current?.click()}
           >
-            {upload.isPending ? <Loader2 className="animate-spin" aria-hidden="true" /> : <ImageUp aria-hidden="true" />}
+            {upload.isPending ? (
+              <Loader2 className="animate-spin" aria-hidden="true" />
+            ) : (
+              <ImageUp aria-hidden="true" />
+            )}
             {isDefault ? 'Tải logo lên' : 'Đổi logo'}
           </Button>
           {!isDefault && (
-            <Button type="button" variant="ghost" disabled={disabled} onClick={() => onChange(appConfig.logoUrl)}>
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={disabled}
+              onClick={() => onChange(appConfig.logoUrl)}
+            >
               <RotateCcw aria-hidden="true" />
               Dùng logo mặc định
             </Button>
@@ -81,8 +96,8 @@ export function LogoUploader({ value, appName, onChange, disabled }: LogoUploade
           </p>
         ) : (
           <p className="text-muted-foreground text-[0.8125rem]">
-            JPG, PNG, WebP hoặc SVG, tối đa 2 MB. Nên dùng ảnh vuông, nền trong suốt. Logo mặc định hiển thị chữ viết tắt
-            trên màu chủ đạo.
+            JPG, PNG, WebP hoặc SVG, tối đa 2 MB. Nên dùng ảnh vuông, nền trong suốt. Logo mặc định
+            hiển thị chữ viết tắt trên màu chủ đạo.
           </p>
         )}
       </div>

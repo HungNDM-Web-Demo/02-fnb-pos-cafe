@@ -14,7 +14,10 @@ export const settingsFormSchema = z.object({
   companyHotline: z
     .string()
     .trim()
-    .refine((v) => !v || HOTLINE_PATTERN.test(v), 'Số hotline chỉ gồm số, khoảng trắng, dấu chấm (8–20 ký tự)'),
+    .refine(
+      (v) => !v || HOTLINE_PATTERN.test(v),
+      'Số hotline chỉ gồm số, khoảng trắng, dấu chấm (8–20 ký tự)'
+    ),
   companyZalo: z.string().trim().max(200, 'Tối đa 200 ký tự'),
   companyEmail: z
     .string()

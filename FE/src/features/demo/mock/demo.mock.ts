@@ -33,7 +33,9 @@ export const demoMock = {
 
   async loginAs(request: LoginAsRequest): Promise<AuthResponse> {
     await mockDelay()
-    const user = quickLoginUsers().find((u) => rolesOfUser(u).some((r) => r.code === request.roleCode))
+    const user = quickLoginUsers().find((u) =>
+      rolesOfUser(u).some((r) => r.code === request.roleCode)
+    )
     if (!user) throw notFound(`Không có tài khoản demo cho vai trò ${request.roleCode}.`)
     if (!user.isActive) throw domain('Tài khoản demo này đang bị khóa.')
     return startSession(user)

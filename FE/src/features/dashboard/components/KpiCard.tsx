@@ -22,7 +22,16 @@ type KpiCardProps = {
  * Thẻ chỉ số cho trang Tổng quan của dự án.
  *   <KpiCard label="Doanh thu hôm nay" value={formatVnd(revenue)} icon={Wallet} change={8.2} changeLabel="so với hôm qua" />
  */
-export function KpiCard({ label, value, icon: Icon, change, changeLabel, inverse, isLoading, className }: KpiCardProps) {
+export function KpiCard({
+  label,
+  value,
+  icon: Icon,
+  change,
+  changeLabel,
+  inverse,
+  isLoading,
+  className,
+}: KpiCardProps) {
   const up = (change ?? 0) >= 0
   const good = inverse ? !up : up
 
@@ -43,8 +52,17 @@ export function KpiCard({ label, value, icon: Icon, change, changeLabel, inverse
       )}
       {change !== undefined && !isLoading && (
         <p className="mt-2 flex items-center gap-1.5 text-xs">
-          <span className={cn('inline-flex items-center gap-0.5 font-semibold', good ? 'text-success' : 'text-destructive')}>
-            {up ? <TrendingUp className="size-3.5" aria-hidden="true" /> : <TrendingDown className="size-3.5" aria-hidden="true" />}
+          <span
+            className={cn(
+              'inline-flex items-center gap-0.5 font-semibold',
+              good ? 'text-success' : 'text-destructive'
+            )}
+          >
+            {up ? (
+              <TrendingUp className="size-3.5" aria-hidden="true" />
+            ) : (
+              <TrendingDown className="size-3.5" aria-hidden="true" />
+            )}
             {up ? '+' : ''}
             {formatNumber(change, 1)}%
           </span>

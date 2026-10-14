@@ -9,8 +9,16 @@ export const demoService = {
   /** Thông tin nguồn dữ liệu để hiển thị trên thanh công cụ demo */
   environment: () =>
     isMockMode()
-      ? { mode: 'mock' as const, label: 'Dữ liệu mẫu', description: 'Lưu trong trình duyệt này, không cần máy chủ' }
-      : { mode: 'api' as const, label: 'Máy chủ thật', description: 'Dữ liệu lưu trong cơ sở dữ liệu của BE' },
+      ? {
+          mode: 'mock' as const,
+          label: 'Dữ liệu mẫu',
+          description: 'Lưu trong trình duyệt này, không cần máy chủ',
+        }
+      : {
+          mode: 'api' as const,
+          label: 'Máy chủ thật',
+          description: 'Dữ liệu lưu trong cơ sở dữ liệu của BE',
+        },
 
   /** Danh sách tài khoản demo; BE tắt DEMO_MODE thì trả 404 → trang đăng nhập ẩn khu đăng nhập nhanh. */
   getAccounts: (): Promise<DemoAccount[]> =>

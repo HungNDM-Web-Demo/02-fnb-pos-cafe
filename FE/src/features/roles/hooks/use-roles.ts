@@ -49,7 +49,8 @@ export function useCreateRole() {
 export function useUpdateRole() {
   const invalidate = useInvalidateRoles()
   return useMutation({
-    mutationFn: ({ id, input }: { id: string; input: UpdateRoleRequest }) => roleService.update(id, input),
+    mutationFn: ({ id, input }: { id: string; input: UpdateRoleRequest }) =>
+      roleService.update(id, input),
     onSuccess: invalidate,
   })
 }

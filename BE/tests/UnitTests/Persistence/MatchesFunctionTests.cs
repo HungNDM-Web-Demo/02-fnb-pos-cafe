@@ -24,11 +24,12 @@ public sealed class MatchesFunctionTests : IAsyncLifetime
     public async Task DisposeAsync() => await _host.DisposeAsync();
 
     [Theory]
-    [InlineData("MINH", "admin")]
-    [InlineData("minh", "admin")]
+    // Tài khoản của dự án này: project.json bỏ nhanvien, thêm thungan, thungan2 (Võ Minh Tuấn)
+    [InlineData("MINH Q", "admin")]
+    [InlineData("minh t", "thungan2")]
     [InlineData("mAi", "quanly")]
-    [InlineData("NHANVIEN@EXAMPLE", "nhanvien")]
-    [InlineData("0123456783", "nhanvien")]
+    [InlineData("THUNGAN@EXAMPLE", "thungan")]
+    [InlineData("0123456784", "thungan")]
     public async Task Search_IsCaseInsensitiveForAscii(string search, string expectedUsername)
     {
         var page = await SearchAsync(search);

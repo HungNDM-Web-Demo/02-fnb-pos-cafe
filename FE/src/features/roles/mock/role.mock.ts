@@ -47,7 +47,8 @@ function getOrThrow(id: string): MockRole {
 function checkPermissionCodes(codes: string[]) {
   const all = allPermissionCodes()
   const unknown = codes.filter((c) => !all.includes(c))
-  if (unknown.length) throw validation({ permissions: `Mã quyền không tồn tại: ${unknown.join(', ')}` })
+  if (unknown.length)
+    throw validation({ permissions: `Mã quyền không tồn tại: ${unknown.join(', ')}` })
 }
 
 function validateInfo(input: UpdateRoleRequest, errors: Record<string, string>) {
@@ -153,7 +154,9 @@ export const roleMock = {
     if (role.isSystem) throw domain(`Không thể xóa vai trò hệ thống ${role.name}.`)
     const userCount = liveUsers().filter((u) => u.roleIds.includes(role.id)).length
     if (userCount > 0) {
-      throw domain(`Vai trò ${role.name} đang gán cho ${userCount} tài khoản, hãy đổi vai trò các tài khoản đó trước.`)
+      throw domain(
+        `Vai trò ${role.name} đang gán cho ${userCount} tài khoản, hãy đổi vai trò các tài khoản đó trước.`
+      )
     }
     // Xóa mềm để không bị nạp lại từ seed
     rolesDb.update(id, { isDeleted: true })
